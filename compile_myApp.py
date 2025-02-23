@@ -17,9 +17,9 @@ separator = ';' if sys.platform == 'win32' else ':'
 
 # Lista de argumentos para PyInstaller
 args = [
-    'desktop_app.py',
+    'app_escritorio.py',
     '--onefile',
-    '--name=FinControlApp',
+    '--name=FinanzasSM',
     f'--add-data={react_dist}{separator}dist',
     '--noconsole',
 ]

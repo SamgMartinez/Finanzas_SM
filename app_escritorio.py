@@ -29,7 +29,7 @@ if __name__ == "__main__":
     
     # Configura la ventana nativa
     webview.create_window(
-        title="FinControl - Gestor de Finanzas", 
+        title="Finanzas SM", 
         url="http://127.0.0.1:5005",
         width=1000,
         height=800,
