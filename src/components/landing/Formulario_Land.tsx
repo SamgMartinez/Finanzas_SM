@@ -1,4 +1,5 @@
 import React,  {useState}  from "react";
+import { ValidateLogin, ValidateRegister } from "../../api/usuario";
 
 const Formulario_Land: React.FC = () => {
     const [isLoginForm, setIsLoginForm] = useState(true);
@@ -8,8 +9,38 @@ const Formulario_Land: React.FC = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Aquí iría la lógica de autenticación
-        console.log(isLoginForm ? 'Iniciando sesión...' : 'Registrando usuario...');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+          alert('Por favor, introduce un correo electrónico válido.');
+          return;
+        }
+
+        if (password.length < 6) {
+          alert('La contraseña debe tener al menos 6 caracteres.');
+          return;
+        }
+        if (!isLoginForm && name.length < 2) {
+          alert('Por favor, introduce un nombre válido.');
+          return;
+        }
+
+        if (isLoginForm) {
+          // Lógica para iniciar sesión
+          let response = ValidateLogin(email, password);
+          if (response == false){
+            alert('Error al iniciar sesión'); 
+          }else{
+            alert('Inicio de sesión correcto');
+          }
+        } else {
+          // Lógica para registrarse
+          if (ValidateRegister(email, password, name) == false){
+            alert('Error al registrarse');
+          }else{
+            alert('Registro correcto');
+          }
+        }
     };
     return(
     <div className="flex-1 bg-white flex items-center justify-center p-4">
@@ -45,7 +76,7 @@ const Formulario_Land: React.FC = () => {
           {!isLoginForm && (
             <div className="mb-6">
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                Nombre completo
+                Nombre
               </label>
               <input
                 type="text"
@@ -101,6 +132,7 @@ const Formulario_Land: React.FC = () => {
           <button 
             type="submit" 
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md font-medium transition-colors duration-300"
+            onClick={handleSubmit}
           >
             {isLoginForm ? 'Iniciar Sesión' : 'Crear Cuenta'}
           </button>

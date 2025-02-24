@@ -23,7 +23,6 @@ args = [
     f'--add-data={react_dist}{separator}dist',
     '--noconsole',
 ]
-
 # Añadir icon solo si existe
 icon_path = os.path.join(react_dist, 'favicon.ico')
 if os.path.exists(icon_path):
