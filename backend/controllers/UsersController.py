@@ -1,11 +1,15 @@
 from werkzeug.security import generate_password_hash
+
 def register_user(cursor, body):
     try:
-        hashed_password = generate_password_hash(body["password"])
+        print(body)
+        hashed_password = generate_password_hash(body['password'])
         cursor.execute(
-            f"INSERT INTO users (username, password, email) VALUES ('{body['username']}', {hashed_password} , '{body['email']}')"
+            "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
+            (body['name'], body['email'], hashed_password)
         )
     except Exception as e:
+        print("### ERROR EN REGISTER_USER ###")
         print(str(e))
         return False
     return True
