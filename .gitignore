@@ -13,6 +13,8 @@ dist-ssr
 *.local
 output
 build
+.venv
+__pycache__
 
 # Editor directories and files
 .vscode/*

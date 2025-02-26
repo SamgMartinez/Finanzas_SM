@@ -2,13 +2,21 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 def register_user(cursor, body):
     try:
+        # Check if user already exists
+        cursor.execute("SELECT * FROM users WHERE email = ?", (body['email'],))
+        existing_user = cursor.fetchone()
+        if existing_user:
+            print("### USER ALREADY EXISTS ###")
+            return False
+        
         print(body)
         hashed_password = generate_password_hash(body['password'])
         cursor.execute(
             "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
             (body['name'], body['email'], hashed_password)
         )
-        cursor.commit()
+        db = cursor.connection
+        db.commit()
     except Exception as e:
         print("### ERROR EN REGISTER_USER ###")
         print(str(e))
@@ -29,6 +37,9 @@ def validate_login(cursor, body):
     try:
         cursor.execute("SELECT * FROM users WHERE email = ?", (body['email'],))
         user = cursor.fetchone()
+        print(body)
+        print(user['name'])
+        print(check_password_hash(user['password'], body['password']))
         if user and check_password_hash(user['password'], body['password']):
             user_dict = dict(user)
             user_dict.pop('password', None)

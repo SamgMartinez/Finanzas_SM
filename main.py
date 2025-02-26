@@ -1,9 +1,12 @@
 import sqlite3
 from flask import Flask, jsonify, send_from_directory, request, g
+from flask_cors import CORS
 from backend.ConfigurationBD import configure_database
 from backend.controllers.UsersController import register_user, get_user_by_id, validate_login
 
 api = Flask(__name__, static_folder="./dist/", static_url_path="/")
+CORS(api, supports_credentials=True)
+
 
 DATABASE = 'FinanzasSM.db'
 
@@ -33,6 +36,8 @@ def home():
 # Endpoint for user registration
 @api.route("/api/users/register", methods=["POST"])
 def route_register():
+    if request.method == "OPTIONS":
+        return jsonify({"message": "Preflight OK"}), 200
     try:
         if not request.is_json:
             return jsonify({"error": "Invalid JSON"}), 400
@@ -49,6 +54,8 @@ def route_register():
 
 @api.route("/api/users/<int:user_id>", methods=["GET"])
 def route_get_user(user_id):
+    if request.method == "OPTIONS":
+        return jsonify({"message": "Preflight OK"}), 200
     try:
         db = get_db()
         cursor = db.cursor()
