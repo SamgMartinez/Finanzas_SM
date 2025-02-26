@@ -1,11 +1,13 @@
 import React,  {useState}  from "react";
 import { ValidateLogin, Register } from "../../api/usuario";
+import { useNavigate } from "react-router-dom";
 
 const Formulario_Land: React.FC = () => {
     const [isLoginForm, setIsLoginForm] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
@@ -32,6 +34,7 @@ const Formulario_Land: React.FC = () => {
           alert('Error al iniciar sesión'); 
         }else{
           alert('Inicio de sesión correcto');
+          navigate('/Home');
         }
       } else {
         // Lógica para registrarse
