@@ -34,7 +34,7 @@ const Formulario_Land: React.FC = () => {
           alert('Error al iniciar sesión'); 
         }else{
           alert('Inicio de sesión correcto');
-          navigate('/Home');
+          navigate('/User');
         }
       } else {
         // Lógica para registrarse

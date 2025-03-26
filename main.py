@@ -33,7 +33,7 @@ with api.app_context():
 def home():
     return send_from_directory(api.static_folder, "index.html")
 
-# Endpoint for user registration
+###         Endpoint for user           ###
 @api.route("/api/users/register", methods=["POST"])
 def route_register():
     if request.method == "OPTIONS":

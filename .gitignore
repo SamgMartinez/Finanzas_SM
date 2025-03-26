@@ -14,9 +14,11 @@ dist-ssr
 output
 build
 .venv
-__pycache__
+__pycache__/
 .env
 .pyc
+*.bd
+*.xlsm
 
 # Editor directories and files
 .vscode/*
